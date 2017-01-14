@@ -19,21 +19,39 @@
  *  占位文字
  */
 @property(nonatomic, strong) NSArray *placeHolders;
-
 /**
  *  姓名
  */
 @property(nonatomic, copy) NSString *name;
-
 /**
  *  年龄
  */
 @property(nonatomic, copy) NSString *age;
-
 /**
  *  地址
  */
 @property(nonatomic, copy) NSString *address;
+/**
+ *  公司
+ */
+@property(nonatomic, copy) NSString *company;
+/**
+ *  性别
+ */
+@property(nonatomic, copy) NSString *gender;
+/**
+ *  爱好
+ */
+@property(nonatomic, copy) NSString *Hobby;
+/**
+ *  身高
+ */
+@property(nonatomic, copy) NSString *height;
+/**
+ *  体重
+ */
+@property(nonatomic, copy) NSString *weight;
+
 @end
 
 @implementation TableViewController
@@ -42,6 +60,7 @@
     [super viewDidLoad];
 
     [self setupSubmitButton];
+    self.tableView.rowHeight = 150.f;
     
     // 注册通知
     // 注意：此处监听的通知是：UITextFieldTextDidEndEditingNotification，textField结束编辑发送的通知，textField结束编辑时才会发送这个通知。
@@ -61,7 +80,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -77,6 +96,31 @@
     TableViewCell *customCell = (TableViewCell *)cell;
     customCell.titleLabel.text = self.titles[indexPath.row];
     customCell.contentTextField.placeholder = self.placeHolders[indexPath.row];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            customCell.contentTextField.text = self.name;
+        } else if (indexPath.row == 1) {
+            customCell.contentTextField.text = self.age;
+        } else if (indexPath.row == 2){
+            customCell.contentTextField.text = self.address;
+        } else if (indexPath.row == 3){
+            customCell.contentTextField.text = self.company;
+        } else if (indexPath.row == 4){
+            customCell.contentTextField.text = self.gender;
+        } else if (indexPath.row == 5){
+            customCell.contentTextField.text = self.Hobby;
+        } else if (indexPath.row == 6){
+            customCell.contentTextField.text = self.height;
+        } else if (indexPath.row == 7){
+            customCell.contentTextField.text = self.weight;
+        } else {
+            customCell.contentTextField.text = nil;
+        }
+        // 必须有else!
+    } else {
+        // 切记：对于cell的重用，有if，就必须有else。因为之前屏幕上出现的cell离开屏幕被缓存起来时候，cell上的内容并没有清空，当cell被重用时，系统并不会给我们把cell上之前配置的内容清空掉，所以我们在else中对contentTextField内容进行重新配置或者清空（根据自己的业务场景而定）
+        customCell.contentTextField.text = [NSString stringWithFormat:@"第%ld组,第%ld行",indexPath.section,indexPath.row];
+    }
 }
 
 #pragma mark - private method
@@ -93,6 +137,21 @@
                 break;
             case 2: // 地址
                 self.address = textField.text;
+                break;
+            case 3: // 公司
+                self.company = textField.text;
+                break;
+            case 4: // 性别
+                self.gender = textField.text;
+                break;
+            case 5: // 爱好
+                self.Hobby = textField.text;
+                break;
+            case 6: // 身高
+                self.height = textField.text;
+                break;
+            case 7: // 体重
+                self.weight = textField.text;
                 break;
                 
             default:
@@ -124,7 +183,7 @@
 - (NSArray *)titles
 {
     if (!_titles) {
-        _titles = @[@"姓名",@"年龄",@"地址"];
+        _titles = @[@"姓名",@"年龄",@"地址",@"公司",@"性别",@"爱好",@"身高",@"体重"];
     }
     return _titles;
 }
@@ -132,9 +191,10 @@
 - (NSArray *)placeHolders
 {
     if (!_placeHolders) {
-        _placeHolders = @[@"请输入姓名",@"请输入年龄",@"请输入地址"];
+        _placeHolders = @[@"请输入姓名",@"请输入年龄",@"请输入地址",@"请输入公司",@"请输入性别",@"请输入爱好",@"请输入身高",@"请输入体重"];
     }
     return _placeHolders;
 }
+
 
 @end
