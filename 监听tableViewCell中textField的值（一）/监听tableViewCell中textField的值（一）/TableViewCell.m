@@ -23,8 +23,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.contentTextField becomeFirstResponder];
 }
 
